@@ -4,23 +4,23 @@
     {
       "name": "debug",
       "displayName": "Debug",
-      "description": "Debug configuration with Conan toolchain",
+      "description": "Debug configuration",
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/debug",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
-        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/build/conan_toolchain.cmake"
+        "BUILD_TESTS": "OFF"
       }
     },
     {
       "name": "release",
       "displayName": "Release",
-      "description": "Release configuration with Conan toolchain",
+      "description": "Release configuration",
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/release",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
-        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/build/conan_toolchain.cmake"
+        "BUILD_TESTS": "OFF"
       }
     }
   ]
