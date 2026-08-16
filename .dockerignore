@@ -1,0 +1,14 @@
+.git
+.gitignore
+.vscode
+build
+build/
+.DS_Store
+*.swp
+*.o
+*.a
+*.so
+*.dSYM
+compile_commands.json
+venv
+__pycache__
