@@ -1,0 +1,37 @@
+cmake_minimum_required(VERSION 3.21)
+project(project_name VERSION 0.1.0 LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+if (NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Build type" FORCE)
+endif()
+
+find_package(fmt CONFIG REQUIRED)
+
+# Collect application sources automatically so adding new files is easy.
+file(GLOB_RECURSE APP_SOURCES CONFIGURE_DEPENDS
+  ${CMAKE_SOURCE_DIR}/src/*.cpp
+  ${CMAKE_SOURCE_DIR}/src/*/*.cpp
+)
+
+add_library(app_lib STATIC ${APP_SOURCES})
+target_include_directories(app_lib PUBLIC ${CMAKE_SOURCE_DIR}/include)
+target_compile_features(app_lib PUBLIC cxx_std_17)
+
+if(MSVC)
+  target_compile_options(app_lib PRIVATE /W4 /permissive-)
+else()
+  target_compile_options(app_lib PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+
+add_executable(app src/main.cpp)
+target_link_libraries(app PRIVATE app_lib fmt::fmt)
+target_compile_features(app PRIVATE cxx_std_17)
+
+include(CTest)
+enable_testing()
+
+add_subdirectory(tests)

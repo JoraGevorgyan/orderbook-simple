@@ -42,7 +42,7 @@
 # Build directories
 build/
 Build/
-build-*/
+build*/
 
 # CMake generated files
 CMakeFiles/
@@ -68,5 +68,6 @@ vcpkg_installed/
 Testing/
 .cache/
 
-# ide
-.vscode/
+/conan/
+/.vscode/
+.DS_Store
