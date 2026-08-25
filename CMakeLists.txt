@@ -52,22 +52,22 @@ file(GLOB_RECURSE APP_SOURCES CONFIGURE_DEPENDS
 	${CMAKE_SOURCE_DIR}/src/*/src/*.cpp
 )
 
-add_library(app_lib STATIC ${APP_SOURCES})
-target_include_directories(app_lib PUBLIC ${CMAKE_SOURCE_DIR}/src)
-target_compile_features(app_lib PUBLIC cxx_std_20)
+add_library(orderbook_lib STATIC ${APP_SOURCES})
+target_include_directories(orderbook_lib PUBLIC ${CMAKE_SOURCE_DIR}/src)
+target_compile_features(orderbook_lib PUBLIC cxx_std_20)
 
 if(MSVC)
-	target_compile_options(app_lib PRIVATE /W4 /permissive-)
+	target_compile_options(orderbook_lib PRIVATE /W4 /permissive-)
 else()
-	target_compile_options(app_lib PRIVATE -Wall -Wextra -Wpedantic)
+	target_compile_options(orderbook_lib PRIVATE -Wall -Wextra -Wpedantic)
 endif()
 
-add_executable(app src/main.cpp)
-target_link_libraries(app PRIVATE app_lib)
-target_compile_features(app PRIVATE cxx_std_20)
+add_executable(orderbook src/main.cpp)
+target_link_libraries(orderbook PRIVATE orderbook_lib)
+target_compile_features(orderbook PRIVATE cxx_std_20)
 
 if(TARGET format_check)
-	add_dependencies(app format_check)
+	add_dependencies(orderbook format_check)
 endif()
 
 include(CTest)

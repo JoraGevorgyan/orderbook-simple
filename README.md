@@ -47,7 +47,7 @@ cmake --build build
 Run the executable:
 
 ```
-./build/debug/app
+./build/debug/orderbook
 ```
 
 Run tests with CTest:
