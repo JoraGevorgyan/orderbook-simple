@@ -1,12 +1,20 @@
 #include <iostream>
-#include <concepts>
-#include "module1/greet.hpp"
+#include <exception>
+#include "executor/Executor.hpp"
+#include "reporter/Reporter.hpp"
+#include "listener/Listener.hpp"
 
-int main(int argc, char** argv) {
-	static_assert(std::same_as<decltype(42), int>);
-	std::string name = (argc > 1) ? argv[1] : "World";
-	auto message = module1::greet(name);
-	std::cout << message << std::endl;
-	std::cout << "C++20 check: passed" << std::endl;
+int main() {
+	try {
+		executor::Executor::start();
+		reporter::Reporter::start();
+		listener::Listener::start();
+	} catch (const std::exception& exception) {
+		std::cerr << exception.what() << std::endl;
+		return 1;
+	} catch (...) {
+		std::cerr << "Unknown exception" << std::endl;
+		return 1;
+	}
 	return 0;
 }
