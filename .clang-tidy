@@ -60,6 +60,7 @@ Checks: >
   modernize-deprecated-headers,
   -modernize-use-equals-default,
   readability-non-const-parameter,
+  google-readability-namespace-comments,
   readability-make-member-function-const,
   readability-avoid-const-params-in-decls,
   misc-const-correctness,
