@@ -8,11 +8,11 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 option(BUILD_TESTS "Build the test targets" OFF)
 
 if (NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
-  set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Build type" FORCE)
+	set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Build type" FORCE)
 endif()
 
 file(GLOB_RECURSE APP_SOURCES CONFIGURE_DEPENDS
-  ${CMAKE_SOURCE_DIR}/src/*/src/*.cpp
+	${CMAKE_SOURCE_DIR}/src/*/src/*.cpp
 )
 
 add_library(app_lib STATIC ${APP_SOURCES})
@@ -20,9 +20,9 @@ target_include_directories(app_lib PUBLIC ${CMAKE_SOURCE_DIR}/src)
 target_compile_features(app_lib PUBLIC cxx_std_20)
 
 if(MSVC)
-  target_compile_options(app_lib PRIVATE /W4 /permissive-)
+	target_compile_options(app_lib PRIVATE /W4 /permissive-)
 else()
-  target_compile_options(app_lib PRIVATE -Wall -Wextra -Wpedantic)
+	target_compile_options(app_lib PRIVATE -Wall -Wextra -Wpedantic)
 endif()
 
 add_executable(app src/main.cpp)
@@ -33,5 +33,5 @@ include(CTest)
 enable_testing()
 
 if(BUILD_TESTS)
-  add_subdirectory(tests)
+	add_subdirectory(tests)
 endif()
