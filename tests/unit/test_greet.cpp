@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+
 #include "module1/greet.hpp"
 
 TEST(GreetTest, ReturnsGreeting)

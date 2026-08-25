@@ -1,4 +1,5 @@
 #include "../Reporter.hpp"
+
 #include <iostream>
 
 namespace reporter {

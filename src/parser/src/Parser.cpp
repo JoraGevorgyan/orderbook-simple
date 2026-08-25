@@ -1,14 +1,16 @@
 #include "../Parser.hpp"
 
+#include <iostream>
+
 namespace parser {
 
-std::string greet(const std::string& name)
+void greet(const std::string& msg)
 {
-	static_assert(std::same_as<decltype(name), const std::string&>);
-	if (name.empty()) {
-		return "it was empty";
+	static_assert(std::same_as<decltype(msg), const std::string&>);
+	if (msg.empty()) {
+		std::cout << "it was empty";
 	}
-	return "Heeeeello, " + name + "!";
+	std::cout << "got msg: " + msg << std::endl;
 }
 
 } // namespace parser

@@ -4,6 +4,6 @@
 
 namespace parser {
 
-std::string greet(const std::string& name);
+void greet(const std::string& msg);
 
 } // namespace parser
