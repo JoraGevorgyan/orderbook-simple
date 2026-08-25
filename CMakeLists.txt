@@ -12,12 +12,11 @@ if (NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 endif()
 
 file(GLOB_RECURSE APP_SOURCES CONFIGURE_DEPENDS
-  ${CMAKE_SOURCE_DIR}/src/*.cpp
-  ${CMAKE_SOURCE_DIR}/src/*/*.cpp
+  ${CMAKE_SOURCE_DIR}/src/*/src/*.cpp
 )
 
 add_library(app_lib STATIC ${APP_SOURCES})
-target_include_directories(app_lib PUBLIC ${CMAKE_SOURCE_DIR}/include)
+target_include_directories(app_lib PUBLIC ${CMAKE_SOURCE_DIR}/src)
 target_compile_features(app_lib PUBLIC cxx_std_20)
 
 if(MSVC)
