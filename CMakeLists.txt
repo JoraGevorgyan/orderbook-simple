@@ -6,6 +6,43 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 option(BUILD_TESTS "Build the test targets" OFF)
+option(ENABLE_CLANG_TIDY "Run clang-tidy during compilation" OFF)
+option(ENABLE_CLANG_FORMAT_CHECK "Check formatting during the build" OFF)
+
+file(GLOB_RECURSE FORMAT_FILES CONFIGURE_DEPENDS
+	${CMAKE_SOURCE_DIR}/src/*.[ch]pp
+	${CMAKE_SOURCE_DIR}/include/*.[ch]pp
+	${CMAKE_SOURCE_DIR}/tests/*.[ch]pp
+)
+
+find_program(CLANG_FORMAT_EXECUTABLE NAMES clang-format)
+if(CLANG_FORMAT_EXECUTABLE)
+	add_custom_target(apply_format
+		COMMAND ${CLANG_FORMAT_EXECUTABLE} -i --style=file ${FORMAT_FILES}
+		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+		COMMENT "Applying clang-format"
+		VERBATIM
+	)
+
+	if(ENABLE_CLANG_FORMAT_CHECK)
+		add_custom_target(format_check
+			COMMAND ${CLANG_FORMAT_EXECUTABLE} --dry-run --Werror --style=file ${FORMAT_FILES}
+			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+			COMMENT "Checking clang-format"
+			VERBATIM
+		)
+	endif()
+elseif(ENABLE_CLANG_FORMAT_CHECK)
+	message(FATAL_ERROR "clang-format is required when ENABLE_CLANG_FORMAT_CHECK is enabled")
+endif()
+
+if(ENABLE_CLANG_TIDY)
+	find_program(CLANG_TIDY_EXECUTABLE NAMES clang-tidy)
+	if(NOT CLANG_TIDY_EXECUTABLE)
+		message(FATAL_ERROR "clang-tidy is required when ENABLE_CLANG_TIDY is enabled")
+	endif()
+	set(CMAKE_CXX_CLANG_TIDY ${CLANG_TIDY_EXECUTABLE})
+endif()
 
 if (NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 	set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Build type" FORCE)
@@ -28,6 +65,10 @@ endif()
 add_executable(app src/main.cpp)
 target_link_libraries(app PRIVATE app_lib)
 target_compile_features(app PRIVATE cxx_std_20)
+
+if(TARGET format_check)
+	add_dependencies(app format_check)
+endif()
 
 include(CTest)
 enable_testing()

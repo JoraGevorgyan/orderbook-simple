@@ -2,7 +2,8 @@
 
 namespace module1 {
 
-std::string greet(const std::string& name) {
+std::string greet(const std::string& name)
+{
 	static_assert(std::same_as<decltype(name), const std::string&>);
 	return "Heeeeello, " + name + "!";
 }

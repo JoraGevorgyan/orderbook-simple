@@ -31,6 +31,12 @@ cmake --preset debug
 cmake --build build/debug
 ```
 
+Apply clang-format:
+
+```
+cmake --build build/debug --target apply_format
+```
+
 Or with plain cmake:
 
 ```
