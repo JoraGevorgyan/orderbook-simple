@@ -9,7 +9,7 @@
       "binaryDir": "${sourceDir}/build/debug",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
-        "BUILD_TESTS": "OFF"
+        "BUILD_TESTS": "ON"
       }
     },
     {

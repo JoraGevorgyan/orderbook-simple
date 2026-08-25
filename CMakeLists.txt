@@ -18,7 +18,7 @@ file(GLOB_RECURSE APP_SOURCES CONFIGURE_DEPENDS
 
 add_library(app_lib STATIC ${APP_SOURCES})
 target_include_directories(app_lib PUBLIC ${CMAKE_SOURCE_DIR}/include)
-target_compile_features(app_lib PUBLIC cxx_std_17)
+target_compile_features(app_lib PUBLIC cxx_std_20)
 
 if(MSVC)
   target_compile_options(app_lib PRIVATE /W4 /permissive-)
@@ -28,7 +28,7 @@ endif()
 
 add_executable(app src/main.cpp)
 target_link_libraries(app PRIVATE app_lib)
-target_compile_features(app PRIVATE cxx_std_17)
+target_compile_features(app PRIVATE cxx_std_20)
 
 include(CTest)
 enable_testing()

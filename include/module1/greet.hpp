@@ -3,5 +3,5 @@
 #include <string>
 
 namespace module1 {
-  std::string greet(const std::string& name);
+	std::string greet(const std::string& name);
 }
