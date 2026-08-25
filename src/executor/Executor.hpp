@@ -2,6 +2,11 @@
 
 #include <string>
 
-namespace module1 {
-std::string greet(const std::string& name);
-}
+namespace executor {
+
+class Executor {
+public:
+	static void start();
+};
+
+} // namespace executor

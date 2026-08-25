@@ -2,6 +2,11 @@
 
 #include <string>
 
-namespace module1 {
-std::string greet(const std::string& name);
-}
+namespace reporter {
+
+class Reporter {
+public:
+	static void start();
+};
+
+} // namespace reporter

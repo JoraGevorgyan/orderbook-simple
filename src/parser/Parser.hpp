@@ -2,8 +2,8 @@
 
 #include <string>
 
-namespace module1 {
+namespace parser {
 
 std::string greet(const std::string& name);
 
-} // namespace module1
+} // namespace parser

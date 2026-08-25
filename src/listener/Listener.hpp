@@ -2,6 +2,11 @@
 
 #include <string>
 
-namespace module1 {
-std::string greet(const std::string& name);
-}
+namespace listener {
+
+class Listener {
+public:
+	static void start();
+};
+
+} // namespace listener
