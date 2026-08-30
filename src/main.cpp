@@ -12,8 +12,8 @@ int main()
 		reporter::Reporter::start();
 		listener::Listener::start();
 	}
-	catch (const std::exception& exception) {
-		std::cerr << exception.what() << std::endl;
+	catch (const std::exception& err) {
+		std::cerr << err.what() << std::endl;
 		return 1;
 	}
 	catch (...) {
