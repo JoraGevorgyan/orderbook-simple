@@ -11,7 +11,8 @@
 				"CMAKE_BUILD_TYPE": "Debug",
 				"BUILD_TESTS": "OFF",
 				"ENABLE_CLANG_TIDY": "ON",
-				"ENABLE_CLANG_FORMAT_CHECK": "ON"
+				"ENABLE_CLANG_FORMAT_CHECK": "ON",
+				"CMAKE_PREFIX_PATH": "/opt/homebrew/Cellar/boost/1.92.0"
 			}
 		},
 		{
