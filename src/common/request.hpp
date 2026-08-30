@@ -6,18 +6,18 @@ namespace request {
 
 // N, userId, symbol, price, quantity, side, userOrderId
 struct NewOrder {
-	order_id_t u_id;
+	id_t u_id;
 	str_t symbol;
 	price_t price;
 	quantity_t quantity;
 	Side side;
-	order_id_t o_id;
+	id_t o_id;
 };
 
 // C, userId, userOrderId
 struct CancelOrder {
-	order_id_t u_id;
-	order_id_t o_id;
+	id_t u_id;
+	id_t o_id;
 };
 
 // F
