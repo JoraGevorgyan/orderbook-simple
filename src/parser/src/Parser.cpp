@@ -21,12 +21,13 @@ std::optional<cmd_fields_t> split_csv_row(std::string_view row)
 	constexpr std::string_view delimiter{", "};
 	for (const auto el : std::views::split(row, delimiter)) {
 		if (res.size() > max_cmd_len) {
-			// Received more elements than expected
 			return std::nullopt;
 		}
-		auto in_ref = res.emplace_back();
-		std::ranges::copy(
-			el | std::views::take(ob::max_str_len - 1), std::back_inserter(in_ref));
+		std::string_view el_view{el.data(), el.size()};
+		if (el_view.size() > ob::max_str_len) {
+			return std::nullopt;
+		}
+		res.emplace_back(el_view);
 	}
 	return res;
 }
