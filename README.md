@@ -1,4 +1,4 @@
-# project_name — Minimal C++ CLI template
+# orderbook — Minimal C++ CLI template
 
 Overview
 --------
