@@ -9,12 +9,12 @@
 #include "parser/Parser.hpp"
 
 namespace listener {
+namespace {
 
-void Listener::start()
+void process_data_stream(std::istream& in_stream)
 {
-	std::cout << "listener started" << std::endl;
 	std::string line;
-	while (std::getline(std::cin, line)) {
+	while (std::getline(in_stream, line)) {
 		const auto cmd = parser::parse_csv(line);
 		std::visit(
 			[](const auto& cmd) {
@@ -37,6 +37,20 @@ void Listener::start()
 			},
 			cmd);
 	}
+}
+
+} // namespace
+
+void start_stdin()
+{
+	std::cout << "stdin listener started" << std::endl;
+	process_data_stream(std::cin);
+}
+
+void start_udp()
+{
+	std::cout << "upd listener started" << std::endl;
+	process_data_stream(std::cin);
 }
 
 } // namespace listener

@@ -4,9 +4,7 @@
 
 namespace listener {
 
-class Listener {
-public:
-	static void start();
-};
+void start_stdin();
+void start_udp();
 
 } // namespace listener
