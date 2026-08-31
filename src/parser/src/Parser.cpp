@@ -13,7 +13,7 @@ namespace {
 
 inline constexpr uint8_t max_cmd_len = 7;
 using cmd_fields_t =
-	boost::container::static_vector<ob::str_t, max_cmd_len + 1>;
+	boost::container::static_vector<ob::str21_t, max_cmd_len + 1>;
 
 std::optional<cmd_fields_t> split_csv_row(std::string_view row)
 {

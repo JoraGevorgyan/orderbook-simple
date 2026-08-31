@@ -7,7 +7,7 @@ namespace request {
 // N, userId, symbol, price, quantity, side, userOrderId
 struct NewOrder {
 	id_t u_id;
-	str_t symbol;
+	str21_t symbol;
 	price_t price;
 	quantity_t quantity;
 	Side side;
