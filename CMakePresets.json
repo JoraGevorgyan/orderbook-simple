@@ -12,6 +12,7 @@
 				"BUILD_TESTS": "OFF",
 				"ENABLE_CLANG_TIDY": "ON",
 				"ENABLE_CLANG_FORMAT_CHECK": "ON",
+				"CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
 				"CMAKE_PREFIX_PATH": "/opt/homebrew/Cellar/boost/1.92.0"
 			}
 		},
@@ -23,7 +24,8 @@
 			"binaryDir": "${sourceDir}/build/release",
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Release",
-				"BUILD_TESTS": "OFF"
+				"BUILD_TESTS": "OFF",
+				"CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
 			}
 		}
 	]
