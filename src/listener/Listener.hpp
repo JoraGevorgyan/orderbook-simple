@@ -1,7 +1,5 @@
 #pragma once
 
-#include <string>
-
 namespace listener {
 
 void start_stdin();
