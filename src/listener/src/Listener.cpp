@@ -58,19 +58,24 @@ boost::asio::awaitable<void> udp_listener()
 	std::cout << "upd listener started" << std::endl;
 	using udp_t = boost::asio::ip::udp;
 
-	auto executor = co_await boost::asio::this_coro::executor;
-	udp_t::socket socket(
-		executor, udp_t::endpoint(boost::asio::ip::address_v4::loopback(), 1234));
-	constexpr auto max_data_size = std::numeric_limits<uint16_t>::max();
-	boost::static_string<max_data_size> buf{};
-
 	while (true) {
+		std::cout << "waiting for UDP...\n";
+		auto executor = co_await boost::asio::this_coro::executor;
+		udp_t::socket socket(
+			executor, udp_t::endpoint(boost::asio::ip::address_v4::loopback(), 1234));
+		constexpr auto max_data_size = std::numeric_limits<uint16_t>::max();
+		boost::static_string<max_data_size> buf{};
+
 		udp_t::endpoint sender;
 		const auto num = co_await socket.async_receive_from(
 			boost::asio::buffer(buf), sender, boost::asio::use_awaitable);
+		std::cout << "received " << num << " bytes\n";
+
 		BufferStream buf_stream(buf.data(), num);
 		std::istream in_stream(&buf_stream);
 		process_data_stream(in_stream);
+
+		std::cout << "processing finished\n";
 	}
 }
 
