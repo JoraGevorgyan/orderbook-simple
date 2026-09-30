@@ -1,13 +1,14 @@
 #include "../Listener.hpp"
 
-#include <algorithm>
+#include <array>
 #include <boost/asio.hpp>
 #include <boost/asio/awaitable.hpp>
 #include <boost/asio/co_spawn.hpp>
 #include <boost/asio/this_coro.hpp>
 #include <boost/asio/use_awaitable.hpp>
-#include <exception>
+#include <cstdint>
 #include <iostream>
+#include <limits>
 #include <variant>
 
 #include "executor/Executor.hpp"
@@ -55,27 +56,22 @@ void process_data_stream(std::istream& in_stream)
 
 boost::asio::awaitable<void> udp_listener()
 {
-	std::cout << "upd listener started" << std::endl;
+	std::cout << "udp listener started" << std::endl;
 	using udp_t = boost::asio::ip::udp;
 
-	while (true) {
-		std::cout << "waiting for UDP...\n";
-		auto executor = co_await boost::asio::this_coro::executor;
-		udp_t::socket socket(
-			executor, udp_t::endpoint(boost::asio::ip::address_v4::loopback(), 1234));
-		constexpr auto max_data_size = std::numeric_limits<uint16_t>::max();
-		boost::static_string<max_data_size> buf{};
+	auto executor = co_await boost::asio::this_coro::executor;
+	udp_t::socket socket(
+		executor, udp_t::endpoint(boost::asio::ip::address_v4::loopback(), 1234));
+	constexpr uint16_t max_data_size = 4096;
+	std::array<char, max_data_size> buf{};
 
+	while (true) {
 		udp_t::endpoint sender;
 		const auto num = co_await socket.async_receive_from(
 			boost::asio::buffer(buf), sender, boost::asio::use_awaitable);
-		std::cout << "received " << num << " bytes\n";
-
 		BufferStream buf_stream(buf.data(), num);
 		std::istream in_stream(&buf_stream);
 		process_data_stream(in_stream);
-
-		std::cout << "processing finished\n";
 	}
 }
 
@@ -91,7 +87,7 @@ void start_udp()
 {
 	boost::asio::io_context io;
 	boost::asio::co_spawn(io, udp_listener(), boost::asio::detached);
-	io.run(); // in a thread??
+	io.run();
 }
 
 } // namespace listener
