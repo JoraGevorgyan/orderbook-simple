@@ -56,7 +56,7 @@ find_package(Boost REQUIRED CONFIG)
 
 add_library(orderbook_lib STATIC ${APP_SOURCES})
 target_include_directories(orderbook_lib PUBLIC ${CMAKE_SOURCE_DIR}/src)
-target_link_libraries(orderbook_lib PRIVATE Boost::headers)
+target_link_libraries(orderbook_lib PUBLIC Boost::headers)
 
 target_compile_features(orderbook_lib PUBLIC cxx_std_20)
 
