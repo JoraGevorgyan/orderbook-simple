@@ -11,6 +11,7 @@ int main()
 		core::BookManager::start();
 		reporter::Reporter::start();
 		listener::start_udp();
+		core::BookManager::stop();
 	}
 	catch (const std::exception& err) {
 		std::cerr << err.what() << std::endl;

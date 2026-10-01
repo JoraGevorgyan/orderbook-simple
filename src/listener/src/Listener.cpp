@@ -35,18 +35,15 @@ void process_data_stream(std::istream& in_stream)
 			[](const auto& cmd) {
 				using cmd_t = std::decay_t<decltype(cmd)>;
 				if constexpr (std::is_same_v<cmd_t, ob::request::NewOrder>) {
-					std::cout << "got NEW order" << std::endl;
-					// orderbook::new_order
+					core::BookManager::new_order(cmd);
 					return;
 				}
 				if constexpr (std::is_same_v<cmd_t, ob::request::CancelOrder>) {
-					// orderbook::cancel_order
-					std::cout << "got CANCEL order" << std::endl;
+					core::BookManager::cancel_order(cmd);
 					return;
 				}
 				if constexpr (std::is_same_v<cmd_t, ob::request::Flush>) {
-					std::cout << "got FLUSH" << std::endl;
-					// orderbook::flush
+					core::BookManager::flush();
 					return;
 				}
 				if constexpr (std::is_same_v<cmd_t, ob::request::Invalid>) {
