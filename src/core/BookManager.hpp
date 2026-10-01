@@ -2,11 +2,11 @@
 
 #include <string>
 
-namespace executor {
+namespace core {
 
-class Executor {
+class BookManager {
 public:
 	static void start();
 };
 
-} // namespace executor
+} // namespace core

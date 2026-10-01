@@ -1,14 +1,14 @@
 #include <exception>
 #include <iostream>
 
-#include "executor/Executor.hpp"
+#include "core/BookManager.hpp"
 #include "listener/Listener.hpp"
 #include "reporter/Reporter.hpp"
 
 int main()
 {
 	try {
-		executor::Executor::start();
+		core::BookManager::start();
 		reporter::Reporter::start();
 		listener::start_udp();
 	}
