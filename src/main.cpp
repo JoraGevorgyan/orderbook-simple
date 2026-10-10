@@ -3,15 +3,16 @@
 
 #include "core/BookManager.hpp"
 #include "listener/Listener.hpp"
-#include "reporter/Reporter.hpp"
+#include "reporter/ReporterBase.hpp"
 
 int main()
 {
 	try {
 		core::BookManager::start();
-		reporter::Reporter::start();
+		reporter::ReporterBase::start();
 		listener::start_udp();
 		core::BookManager::stop();
+		reporter::ReporterBase::stop();
 	}
 	catch (const std::exception& err) {
 		std::cerr << err.what() << std::endl;
