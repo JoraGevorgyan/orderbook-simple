@@ -1,10 +1,14 @@
 #pragma once
 
+#include <memory>
+#include <string>
 #include <thread>
+#include <unordered_map>
 #include <variant>
 
 #include "common/AsyncQueue.hpp"
 #include "common/request.hpp"
+#include "core/OrderBookBase.hpp"
 
 namespace core {
 
@@ -39,6 +43,7 @@ private:
 
 	bool enqueue(const command_t& cmd);
 	void run_worker();
+	static std::unique_ptr<OrderBookBase> make_book();
 	void launch();
 	void shutdown();
 
@@ -48,6 +53,8 @@ private:
 	void handle(const ob::request::Flush& flush);
 
 	ob::AsyncQueue<command_t> _queue;
+	// Touched by the worker thread only.
+	std::unordered_map<std::string, std::unique_ptr<OrderBookBase>> _books;
 	std::thread _worker;
 };
 

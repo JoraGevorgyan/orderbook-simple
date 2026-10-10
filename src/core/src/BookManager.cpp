@@ -1,7 +1,10 @@
 #include "../BookManager.hpp"
 
 #include <iostream>
+#include <memory>
 #include <mutex>
+
+#include "core/OrderBookBasicAI.hpp"
 
 namespace core {
 namespace {
@@ -50,6 +53,11 @@ bool BookManager::enqueue(const command_t& cmd)
 	return _queue.push(cmd);
 }
 
+std::unique_ptr<OrderBookBase> BookManager::make_book()
+{
+	return std::make_unique<OrderBookBasicAI>();
+}
+
 void BookManager::launch()
 {
 	const std::lock_guard lock(lifecycle_mutex);
@@ -76,20 +84,32 @@ void BookManager::run_worker()
 	}
 }
 
-// TODO: forward to the order book once it exists.
 void BookManager::handle(const ob::request::NewOrder& order)
 {
-	std::cout << "NEW order u=" << order.u_id << " o=" << order.o_id << '\n';
+	const std::string symbol(order.symbol.data(), order.symbol.size());
+	auto& book = _books[symbol];
+	if (!book) {
+		book = make_book();
+	}
+	book->new_order(order);
 }
 
 void BookManager::handle(const ob::request::CancelOrder& order)
 {
-	std::cout << "CANCEL order u=" << order.u_id << " o=" << order.o_id << '\n';
+	// A cancel carries no symbol; each book resolves it via its own index.
+	for (auto& entry : _books) {
+		if (entry.second->cancel_order(order)) {
+			return;
+		}
+	}
 }
 
 void BookManager::handle(const ob::request::Flush& /*flush*/)
 {
-	std::cout << "FLUSH\n";
+	for (auto& entry : _books) {
+		entry.second->flush();
+	}
+	_books.clear();
 }
 
 } // namespace core
