@@ -53,11 +53,6 @@ bool BookManager::enqueue(const command_t& cmd)
 	return _queue.push(cmd);
 }
 
-std::unique_ptr<OrderBookBase> BookManager::make_book()
-{
-	return std::make_unique<OrderBookBasicAI>();
-}
-
 void BookManager::launch()
 {
 	const std::lock_guard lock(lifecycle_mutex);
@@ -86,12 +81,10 @@ void BookManager::run_worker()
 
 void BookManager::handle(const ob::request::NewOrder& order)
 {
-	const std::string symbol(order.symbol.data(), order.symbol.size());
-	auto& book = _books[symbol];
-	if (!book) {
-		book = make_book();
+	if (!_books.contains(order.symbol)) {
+		_books[order.symbol] = std::make_unique<OrderBookBasicAI>();
 	}
-	book->new_order(order);
+	_books[order.symbol]->new_order(order);
 }
 
 void BookManager::handle(const ob::request::CancelOrder& order)

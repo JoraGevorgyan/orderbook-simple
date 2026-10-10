@@ -43,7 +43,6 @@ private:
 
 	bool enqueue(const command_t& cmd);
 	void run_worker();
-	static std::unique_ptr<OrderBookBase> make_book();
 	void launch();
 	void shutdown();
 
@@ -54,7 +53,7 @@ private:
 
 	ob::AsyncQueue<command_t> _queue;
 	// Touched by the worker thread only.
-	std::unordered_map<std::string, std::unique_ptr<OrderBookBase>> _books;
+	std::unordered_map<ob::str21_t, std::unique_ptr<OrderBookBase>> _books;
 	std::thread _worker;
 };
 
