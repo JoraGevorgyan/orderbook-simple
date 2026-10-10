@@ -19,7 +19,7 @@ bool ReporterBase::matched_trades(const ob::report::MatchedTrades& report)
 	return instance().enqueue(report);
 }
 
-bool ReporterBase::book_change(const ob::report::BookChange& report)
+bool ReporterBase::book_change(const ob::report::BookTop& report)
 {
 	return instance().enqueue(report);
 }
@@ -34,6 +34,6 @@ void ReporterBase::handle(const ob::report::Acknowledgement& /*report*/) {}
 
 void ReporterBase::handle(const ob::report::MatchedTrades& /*report*/) {}
 
-void ReporterBase::handle(const ob::report::BookChange& /*report*/) {}
+void ReporterBase::handle(const ob::report::BookTop& /*report*/) {}
 
 } // namespace reporter

@@ -20,9 +20,13 @@ struct Acknowledgement {
 
 struct MatchedTrades {};
 
-struct BookChange {};
+struct BookTop {
+	std::optional<price_t> price;
+	std::optional<quantity_t> quantity;
+	Side side;
+};
 
-using report_t = std::variant<Acknowledgement, MatchedTrades, BookChange>;
+using report_t = std::variant<Acknowledgement, MatchedTrades, BookTop>;
 
 } // namespace report
 } // namespace ob
