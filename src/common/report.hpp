@@ -1,6 +1,7 @@
 #pragma once
 
 #include <variant>
+
 #include "common/types.hpp"
 
 namespace ob {
