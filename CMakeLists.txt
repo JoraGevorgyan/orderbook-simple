@@ -17,13 +17,6 @@ file(GLOB_RECURSE FORMAT_FILES CONFIGURE_DEPENDS
 
 find_program(CLANG_FORMAT_EXECUTABLE NAMES clang-format)
 if(CLANG_FORMAT_EXECUTABLE)
-	add_custom_target(apply_format
-		COMMAND ${CLANG_FORMAT_EXECUTABLE} -i --style=file ${FORMAT_FILES}
-		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-		COMMENT "Applying clang-format"
-		VERBATIM
-	)
-
 	if(ENABLE_CLANG_FORMAT_CHECK)
 		add_custom_target(format_check
 			COMMAND ${CLANG_FORMAT_EXECUTABLE} --dry-run --Werror --style=file ${FORMAT_FILES}

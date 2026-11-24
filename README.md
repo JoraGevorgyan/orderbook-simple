@@ -31,10 +31,12 @@ cmake --preset debug
 cmake --build build/debug
 ```
 
-Apply clang-format:
+Apply clang-format to your changes (uses `.clang-format`; new files must be `git add`ed first):
 
 ```
-cmake --build build/debug --target apply_format
+git clang-format          # unstaged changes
+git clang-format --staged # staged changes
+git clang-format --diff   # preview only
 ```
 
 Or with plain cmake:
